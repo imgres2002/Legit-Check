@@ -10,6 +10,8 @@ class LegitCheckApp(tk.Tk):
         super().__init__()
         self.title("Legit Check")
         self.geometry("700x300")
+        icon = tk.PhotoImage(file="images/icon.png")
+        self.iconphoto(True, icon)
         self.selected_txt_file = ""
         self.selected_file = ""
         self.name_list = []
