@@ -57,9 +57,17 @@ def find_friends_json(txt_file, name_list, city_list=None):
                 if len(line.strip().split(',')) >= 11:
                     data = line.strip().split(',')
                     name = f"{data[2].strip()} {data[3].strip()}"
-                    if city_list is None or any(item.strip() in city_list for item in data):
-                        if name in name_list:
-                            data_list.append(line.strip())
+                    if city_list is None:
+                        for name_in_list in name_list:
+                            if name_in_list.lower() == name.lower():
+                                data_list.append(line.strip())
+                    else:
+                        for city in city_list:
+                            for data_item in data:
+                                if city.lower() == data_item.lower():
+                                    for name_list_item in name_list:
+                                        if name_list_item.lower() == name.lower():
+                                            data_list.append(line.strip())
     except FileNotFoundError:
         print("File does not exist or the path is incorrect.")
     except Exception as e:
@@ -78,6 +86,24 @@ def find_friends_vcf(txt_file, phone_list):
                 phone_number = data[-1].strip()
                 if (phone_number or '+48' + phone_number) in phone_list:
                     data_list.append(line.strip())
+    except FileNotFoundError:
+        print("File does not exist or the path is incorrect.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    return data_list
+
+
+def find_user_by_city(txt_file, city):
+    data_list = []
+
+    try:
+        with open(txt_file, 'r', encoding='utf-8') as file:
+            for line in file:
+                data = line.split(',')
+                for data_item in data:
+                    if city.lower() == data_item.lower():
+                        data_list.append(line.strip())
     except FileNotFoundError:
         print("File does not exist or the path is incorrect.")
     except Exception as e:
