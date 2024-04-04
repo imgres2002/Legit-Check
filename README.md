@@ -63,8 +63,12 @@ Legit Check is a simple program for searching legit users in pandabuy txt databa
 
 ## System Requirements
 
-- Python 3.x
-- Tkinter (installed with Python)
+- **Operating System**: Windows, macOS, Linux
+- **Python Version**: 3.x (preferably 3.6 or newer)
+- **External Libraries**:
+  - Tkinter (usually comes pre-installed with Python)
+  - Pillow (Python Imaging Library, install with `pip install Pillow`)
+
 
 ## Running the Program
 
