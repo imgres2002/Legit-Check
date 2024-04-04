@@ -71,4 +71,4 @@ Legit Check is a simple program for searching legit users in pandabuy leak data 
 2. Run the program by executing the `gui.py` file in the terminal or Python environment.
 
 ```bash
-python LegitCheckApp.py
+python gui.py
