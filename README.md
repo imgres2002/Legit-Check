@@ -2,7 +2,7 @@
 ![](images/gui.jpg)
 # The application does not contain the pandabuy database and is only for people who are authorized to have it
 
-Legit Check is a simple program for searching legit users in pandabuy txt database. It allows the user to select a file, specify search criteria, and then search matching users in JSON file, VCF file or specify search criteria.
+Legit Check is a simple program for searching legit users in pandabuy txt database. It allows the user to select a file, specify search criteria, and then search matching users in JSON file(from Facebook friends), VCF file(from your phone's contacts) or specify search criteria.
 
 ## How to Use the Program
 
