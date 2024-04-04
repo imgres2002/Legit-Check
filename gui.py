@@ -3,6 +3,8 @@ from tkinter import filedialog, messagebox
 from tkinter import ttk
 from src import *
 from tkinter.scrolledtext import ScrolledText
+from PIL import Image, ImageTk
+import ctypes
 
 
 class LegitCheckApp(tk.Tk):
@@ -10,7 +12,10 @@ class LegitCheckApp(tk.Tk):
         super().__init__()
         self.title("Legit Check")
         self.geometry("700x300")
-        icon = tk.PhotoImage(file="images/icon.png")
+        myappid = u'mycompany.myproduct.subproduct.version'
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        icon = Image.open("images/icon.ico")
+        icon = ImageTk.PhotoImage(icon)
         self.iconphoto(True, icon)
         self.selected_txt_file = ""
         self.selected_file = ""
@@ -32,7 +37,7 @@ class LegitCheckApp(tk.Tk):
         self.info_label.pack(pady=5)
 
         self.search_options = ttk.Combobox(left_frame,
-                                           values=["Phone Number", "Name and Surname", "JSON File", "VCF File"])
+                                           values=["Phone Number", "Name and Surname", "City", "JSON File", "VCF File"])
         self.search_options.pack(pady=5)
         self.search_options.bind("<<ComboboxSelected>>", self.on_search_option_selected)
 
@@ -63,12 +68,14 @@ class LegitCheckApp(tk.Tk):
         selection = self.search_options.get()
         if selection == "JSON File":
             self.selected_file = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
-            self.entry_label.config(text="Enter cities (comma-separated) or leave empty:")
+            self.entry_label.config(text="Enter cities list (comma-separated) to filter by city or leave empty:")
             self.display_json_info()
         elif selection == "VCF File":
             self.selected_file = filedialog.askopenfilename(filetypes=[("VCF files", "*.vcf")])
             self.entry_label.config(text="Leave empty")
             self.display_vcf_info()
+        elif selection == "City":
+            self.entry_label.config(text="Enter city")
         else:
             self.entry_label.config(
                 text=f"Enter {'Phone Number' if selection == 'Phone Number' else 'Name and Surname'}:")
@@ -102,13 +109,15 @@ class LegitCheckApp(tk.Tk):
             result = find_user_by_phone_number(self.selected_txt_file, self.entry_box.get())
         elif search_option == "Name and Surname":
             result = find_user_by_name_and_surname(self.selected_txt_file, self.entry_box.get())
+        elif search_option == "City":
+            result = find_user_by_city(self.selected_txt_file, self.entry_box.get())
         elif search_option == "JSON File":
             self.name_list = read_data_from_json_file(self.selected_file)
             if not self.name_list:
                 messagebox.showerror("Error", "No friends found in the JSON file.")
                 return
             if cities_entry:
-                cities = [city.strip() for city in cities_entry.split(",")]
+                cities = [city.strip() for city in cities_entry.split(".")]
                 result = find_friends_json(self.selected_txt_file, self.name_list, cities)
             else:
                 result = find_friends_json(self.selected_txt_file, self.name_list)
