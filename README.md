@@ -8,7 +8,7 @@ Legit Check is a simple program for searching legit users in pandabuy txt databa
 
 ### 1. Select TXT File
 
-- Click the "Select TXT File" button to choose the pandabuy leak data text file.
+- Click the "Select TXT File" button to choose the pandabuy database text file.
 - After selecting the file, its path will be displayed below the button.
 
 ### 2. Choose Search Criteria
